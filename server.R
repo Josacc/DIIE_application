@@ -22,7 +22,7 @@ function(input, output, session) {
     req(identical(ext, "xlsx"))
     pre_data <- read_xlsx(input$file_upload$datapath)
     condition <- identical(names(pre_data)[2], "INSTITUTO NACIONAL DE ESTADÍSTICA Y GEOGRAFÍA") &&
-      identical(pre_data[[3,2]], "CNGAE 2023") &&
+      identical(pre_data[[3,2]], "CNGAE 2024") &&
       identical(pre_data[[7,1]], "Folio") &&
       identical(pre_data[[7,3]], "Entidad") &&
       identical(pre_data[[7,5]], "Usuario") &&
@@ -45,7 +45,7 @@ function(input, output, session) {
 
     database_2023     <- data_and_update(input$file_upload$datapath)[[1]]
     update_2023       <- data_and_update(input$file_upload$datapath)[[2]]
-    database_obs_2023 <- team_data(team_reviewers_2023, database_2023) %>%
+    database_obs_2023 <- team_data(reviewer_team, database_2023) %>%
       filter(`Cantidad de obs` > 0)
 
     return(list(database_2023, database_obs_2023, update_2023))
@@ -478,7 +478,7 @@ function(input, output, session) {
       inputId = "id_slider_date_questionnaires_firma_sello",
       max = dmy_hms(data()[[3]]) %>% as_date(),
       value = c(
-        census_2023[[3, 2]],
+        DIIE_dates[[3, 2]],
         dmy_hms(data()[[3]]) %>% as_date()
       )
     )
@@ -486,7 +486,7 @@ function(input, output, session) {
 
   # Change value of count set free questionnaires by day
   observeEvent(input$id_slider_date_questionnaires_firma_sello, {
-    if ((input$id_slider_date_questionnaires_firma_sello)[1] == census_2023[[3, 2]] &&
+    if ((input$id_slider_date_questionnaires_firma_sello)[1] == DIIE_dates[[3, 2]] &&
         (input$id_slider_date_questionnaires_firma_sello)[2] == dmy(word(data()[[3]], 1))) {
       return(updateTabsetPanel(session, inputId = "id_text_questionnaires_firma_sello_range", selected = "accumulated"))
     }

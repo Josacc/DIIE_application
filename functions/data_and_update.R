@@ -24,7 +24,7 @@ data_and_update <- function(.file) {
                                      "6" = "CNPLE",
                                      "7" = "CNDHE",
                                      "8" = "CNTAIPPDPE" ))) %>%
-    mutate(Censo = factor(Censo, levels = levels(pull(census_2023, name))))
+    mutate(Censo = factor(Censo, levels = levels(pull(DIIE_dates, name))))
 
   return(list(.data, .update))
 }

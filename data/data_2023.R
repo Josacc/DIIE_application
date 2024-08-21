@@ -1,144 +1,103 @@
 
 # Default databases -------------------------------------------------------
 
-source("data/review_team.R")
+source("data/reviewer_team.R")
+source("data/federal_entities.R")
 
-# Database DIIE dates.
-census_2023 <- tibble(
-  name = c("CNGE",
-           "CNSPE",
-           "CNSIPEE",
-           "CNPJE",
-           "CNIJE",
-           "CNPLE",
-           "CNDHE",
-           "CNTAIPPDPE") %>% factor() %>% fct_inorder(),
+# Database DIIE dates (update every year!).
+DIIE_dates <- tibble(
+  name = c(
+    "CNGE",
+    "CNSPE",
+    "CNSIPEE",
+    "CNPJE",
+    "CNIJE",
+    "CNPLE",
+    "CNDHE",
+    "CNTAIPPDPE"
+  ) %>% factor() %>% fct_inorder(),
 
-  `start CE` = ymd(c("2023-03-13",
-                     "2023-05-08",
-                     "2023-03-06",
-                     "2023-04-24",
-                     "2023-05-15",
-                     "2023-08-07",
-                     "2023-08-07",
-                     "2023-08-07")),
+  `start CE` = ymd(
+    c(
+      "2024-05-13",
+      "2024-03-04",
+      "2024-02-19",
+      "2024-03-11",
+      "2024-05-06",
+      "2024-07-22",
+      "2024-07-15",
+      "2024-07-22"
+    )
+  ),
 
-  `end CE` = ymd(c("2023-05-26",
-                   "2023-07-14",
-                   "2023-05-12",
-                   "2023-06-30",
-                   "2023-07-21",
-                   "2023-09-29",
-                   "2023-09-29",
-                   "2023-09-29")),
+  `end CE` = ymd(
+    c(
+      "2024-08-02",
+      "2024-05-03",
+      "2024-04-19",
+      "2024-06-07",
+      "2024-08-09",
+      "2024-09-27",
+      "2024-09-20",
+      "2024-09-27"
+    )
+  ),
 
-  `start DIIE` = ymd(c("2023-04-24",
-                       "2023-06-12",
-                       "2023-04-17",
-                       "2023-06-26",
-                       "2023-07-10",
-                       "2023-08-21",
-                       "2023-08-21",
-                       "2023-08-21")),
+  `start DIIE` = ymd(
+    c(
+      "2024-07-01",
+      "2024-04-15",
+      "2024-04-01",
+      "2024-05-06",
+      "2024-06-28",
+      "2024-09-02",
+      "2024-09-02",
+      "2024-09-02"
+    )
+  ),
 
-  `end DIIE` = ymd(c("2023-06-16",
-                     "2023-07-21",
-                     "2023-05-26",
-                     "2023-08-25",
-                     "2023-09-08",
-                     "2023-10-20",
-                     "2023-10-20",
-                     "2023-10-20")),
+  `end DIIE` = ymd(
+    c(
+      "2024-08-30",
+      "2024-06-14",
+      "2024-05-31",
+      "2024-07-19",
+      "2024-09-06",
+      "2024-10-11",
+      "2024-10-04",
+      "2024-10-11"
+    )
+  ),
 
-  prosecution = ymd(c("2023-05-03",
-                      "2023-06-22",
-                      "2023-05-02",
-                      "2023-06-19",
-                      "2023-07-07",
-                      "2023-10-09",
-                      "2023-10-09",
-                      "2023-10-09")),
+  prosecution = ymd(
+    c(
+      "2024-08-05",
+      "2024-05-06",
+      "2024-04-22",
+      "2024-06-03",
+      "2024-08-26",
+      "2024-10-14",
+      "2024-10-07",
+      "2024-10-14"
+    )
+  ),
 
-  diffusion = ymd(c("2023-08-31",
-                    "2023-09-28",
-                    "2023-07-18",
-                    "2023-10-12",
-                    "2023-10-30",
-                    "2023-12-15",
-                    "2023-12-15",
-                    "2023-12-15"))
+  diffusion = ymd(
+    c(
+      "2024-12-02",
+      "2024-08-07",
+      "2024-07-18",
+      "2024-10-03",
+      "2024-11-04",
+      "2024-12-13",
+      "2024-12-13",
+      "2024-12-13"
+    )
+  )
 )
 
-
-entities <- tibble(
-  name = c("AGUASCALIENTES",
-           "BAJA CALIFORNIA",
-           "BAJA CALIFORNIA SUR",
-           "CAMPECHE",
-           "COAHUILA DE ZARAGOZA",
-           "COLIMA",
-           "CHIAPAS",
-           "CHIHUAHUA",
-           "CIUDAD DE MÉXICO",
-           "DURANGO",
-           "GUANAJUATO",
-           "GUERRERO",
-           "HIDALGO",
-           "JALISCO",
-           "MÉXICO",
-           "MICHOACÁN DE OCAMPO",
-           "MORELOS",
-           "NAYARIT",
-           "NUEVO LEÓN",
-           "OAXACA",
-           "PUEBLA",
-           "QUERÉTARO",
-           "QUINTANA ROO",
-           "SAN LUIS POTOSÍ",
-           "SINALOA",
-           "SONORA",
-           "TABASCO",
-           "TAMAULIPAS",
-           "TLAXCALA",
-           "VERACRUZ DE IGNACIO DE LA LLAVE",
-           "YUCATÁN",
-           "ZACATECAS") %>%
-    factor() %>% fct_inorder()
-)
-
-# Database on federal entities, names, Regional and ID.
-federal_entities <- tibble(
-  id_estado = c(
-    "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
-    "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32"
-  ) %>% factor() %>% fct_inorder(),
-  Abreviatura = c(
-    "Ags", "BC", "BCS", "Camp", "Coah", "Col", "Chis", "Chih",
-    "CDMX",  "Dgo", "Gto", "Gro", "Hgo", "Jal", "Mex", "Mich",
-    "Mor", "Nay", "NL", "Oax", "Pue", "Qro", "Q_Roo", "SLP",
-    "Sin", "Son", "Tab", "Tamps", "Tlax", "Ver", "Yuc", "Zac"
-  ) %>% factor() %>% fct_inorder(),
-  Entidad = c(
-    "AGUASCALIENTES", "BAJA CALIFORNIA", "BAJA CALIFORNIA SUR",
-    "CAMPECHE", "COAHUILA DE ZARAGOZA", "COLIMA", "CHIAPAS",
-    "CHIHUAHUA", "CIUDAD DE MÉXICO", "DURANGO", "GUANAJUATO",
-    "GUERRERO", "HIDALGO", "JALISCO", "MÉXICO", "MICHOACÁN DE OCAMPO",
-    "MORELOS", "NAYARIT", "NUEVO LEÓN", "OAXACA",
-    "PUEBLA", "QUERÉTARO", "QUINTANA ROO", "SAN LUIS POTOSÍ",
-    "SINALOA", "SONORA", "TABASCO", "TAMAULIPAS", "TLAXCALA",
-    "VERACRUZ DE IGNACIO DE LA LLAVE", "YUCATÁN", "ZACATECAS"
-  ) %>% factor() %>% fct_inorder(),
-  Regional = c(
-    "Centro Norte", "Noroeste", "Noroeste", "Sureste", "Noreste", "Occidente",
-    "Sur", "Norte", "Centro", "Norte", "Centro Norte", "Centro Sur",
-    "Oriente", "Occidente", "Centro Sur", "Occidente", "Centro Sur", "Occidente",
-    "Noreste", "Sur", "Oriente", "Centro Norte", "Sureste", "Centro Norte",
-    "Noroeste", "Noroeste", "Sur", "Noreste", "Oriente", "Oriente", "Sureste", "Norte"
-  ) %>% factor(levels = c("Centro", "Centro Norte", "Centro Sur", "Noreste",
-                          "Noroeste", "Norte", "Occidente", "Oriente", "Sur", "Sureste"))
-)
-
-# Database on questionnaires in 2023 (except M5-CNGE from CDMX).
+# Database on questionnaires in 2023 (except M5-CNGE from CDMX)
+# (update every year!).
 questionnaires <- tibble(
   Cuestionarios = c(
     "1101", "1102", "1103", "1104", "1105", "1106", "1107", "1108", "1109", "1110", "1111", "1112", "1201", "1301", "1401",
@@ -152,7 +111,7 @@ questionnaires <- tibble(
   )
 )
 
-# Database of relation between "Actividades" and "Estatus".
+# Database of relation between "Actividades" and "Estatus" (update every year!).
 relacion_actividad_fase <- tibble(
   `Actividades (fases)` = c(
     "Integración de información preliminar (informantes)",
@@ -169,7 +128,7 @@ relacion_actividad_fase <- tibble(
   )
 )
 
-# Database DOE dates
+# Database DOE dates (update every year!).
 DOE_dates <- tibble(
   Censo =  c(
     rep("CNGE",  4), rep("CNSPE", 4), rep("CNSIPEE", 4), rep("CNPJE",      4),
@@ -198,7 +157,7 @@ DOE_dates <- tibble(
   ))
 )
 
-# Database on everybody "folios"
+# Database on everybody "folios" (update every year!).
 id_folio <- federal_entities %>%
   transmute(id_estado = as.character(id_estado)) %>%
   pull() %>%
@@ -207,7 +166,7 @@ id_folio <- federal_entities %>%
   tibble(Folio = .) %>%
   add_row(Folio = "091501", .after = 319)
 
-# Databases on everybody "Folios" extended version.
+# Databases on everybody "Folios" extended version (update every year!).
 id_folio_extended <- id_folio %>%
   separate(Folio, into = c("id_estado", "Censo_n", "Módulo"), sep = c(2, 3), remove = FALSE) %>%
   mutate(Censo = str_replace_all(Censo_n,
@@ -225,7 +184,7 @@ id_folio_extended <- id_folio %>%
   left_join(federal_entities, by = "id_estado") %>%
   select(-Abreviatura)
 
-# Database días anhábiles 2023.
+# Database días anhábiles 2023 (update every year!).
 holidays <- tibble(
   `Días Festivos 2023` = ymd(c(
     "2023-01-01", "2023-02-06", "2023-03-20", "2023-04-06", "2023-04-07", "2023-05-01",
@@ -233,10 +192,10 @@ holidays <- tibble(
   ))
 )
 
-# Database days 2023. Attention in the year!
+# Database days 2023. Attention in the year! (update every year!).
 dates_2023 <- tibble(Registro = (ymd("2023-01-01") + c(0:364)))
 
-# Database not-working days 2023.
+# Database not-working days 2023 (update every year!).
 nonworking_days <- dates_2023 %>%
   mutate(n = wday(Registro, week_start = 1)) %>%
   filter(n > 5 | Registro %in% pull(holidays)) %>%
@@ -250,7 +209,8 @@ get_workday <- function(fecha) {
   return(fecha)
 }
 
-# Database class Tibble con fechas del año y ajustadas a días efectivos.
+# Database class Tibble con fechas del año y ajustadas a días efectivos
+# (update every year!).
 working_dates <- dates_2023 %>%
   pull() %>%
   map_vec(get_workday) %>%
@@ -258,7 +218,8 @@ working_dates <- dates_2023 %>%
   bind_cols(dates_2023) %>%
   relocate(Registro)
 
-# Database fechas finales concertación de citas y entrega de cuestionarios.
+# Database fechas finales concertación de citas y entrega de cuestionarios
+# (update every year!).
 dates_citas_cuestionarios <- tibble(
   Censo = levels(pull(DOE_dates, Censo)),
   Fin_citas = dmy(c(
