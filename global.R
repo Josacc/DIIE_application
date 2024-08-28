@@ -16,7 +16,7 @@ Sys.setlocale(locale = "es_MX.utf8")
 # CNGAE 2023 ---------------------------------------------------------------
 
 # Databases 2023
-source("data/data_2023.R")
+source("data/data_current_year.R")
 
 
 # Import and tidy 2023 ----------------------------------------------------
