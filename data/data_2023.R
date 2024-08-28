@@ -161,8 +161,8 @@ id_folio <- federal_entities %>%
   pull() %>%
   map(~str_c(., pull(questionnaires))) %>%
   unlist() %>%
-  tibble(Folio = .) %>%
-  add_row(Folio = "091501", .after = 319)
+  tibble(Folio = .) # %>%
+  # add_row(Folio = "091501", .after = 319) questionnaire for 2023
 
 # Databases on everybody "Folios" extended version (update every year!).
 id_folio_extended <- id_folio %>%
