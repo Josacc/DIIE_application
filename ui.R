@@ -45,7 +45,7 @@ dashboardPage(
         "Analítica",
         tabName = "analysis",
         icon = icon("chart-simple"),
-        menuItem("CNGAE 2024", tabName = "CNGAE_analysis_2023")
+        menuItem("CNGAE 2024", tabName = "CNGAE_analysis") # (update every year!)
       )
     )
   ), # End dashboardSidebar
@@ -63,19 +63,19 @@ dashboardPage(
     fullscreen_all(click_id = "page_full"),
 
 
-# Analítica 2023 ----------------------------------------------------------
+# Analítica ----------------------------------------------------------
 
     tabItems(
       tabItem(
-        "CNGAE_analysis_2023",
+        "CNGAE_analysis",
         navbarPage(
           title       = "Evaluación y seguimiento",
-          id          = "id_navbar_2023",
+          id          = "id_navbar_current_year",
           selected    = "Cargar archivo",
           collapsible = TRUE,
           # Panel Info.
           tabPanel(
-            title = "",
+            title = "Info",
             icon  = icon("info-circle"),
             tags$div(style = "text-align:   justify;
                               font-size:    20px;
@@ -87,7 +87,7 @@ dashboardPage(
                               padding:      4rem;
                               border:       2px solid #ccc" ,
 
-                     h2("DESCRIPCIÓN GENERAL", style = "text-align: center;"),
+                     h2("INFORMACIÓN GENERAL", style = "text-align: center;"),
                      br(),
                      "Las Jefaturas de Departamento de Estadísticas de Gobierno (JDEG)
                      tienen como funciones sustantivas organizar y ejecutar las actividades
@@ -173,7 +173,12 @@ dashboardPage(
                              selectInput(
                                "id_CNGE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(5))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNGE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -181,7 +186,12 @@ dashboardPage(
                              selectInput(
                                "id_CNSPE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(2))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNSPE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -189,7 +199,12 @@ dashboardPage(
                              selectInput(
                                "id_CNSIPEE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(2))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNSIPEE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -197,7 +212,12 @@ dashboardPage(
                              selectInput(
                                "id_CNPJE_2023",
                                "Módulo",
-                               choices = str_c("Módulo ", seq(5))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNPJE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -205,7 +225,12 @@ dashboardPage(
                              selectInput(
                                "id_CNIJE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(7))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNIJE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -213,7 +238,12 @@ dashboardPage(
                              selectInput(
                                "id_CNPLE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(2))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNPLE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -221,7 +251,12 @@ dashboardPage(
                              selectInput(
                                "id_CNDHE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(2))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNDHE", ][[2]]
+                                 )
+                               )
                              )
                            ),
                            tabPanel(
@@ -229,7 +264,12 @@ dashboardPage(
                              selectInput(
                                "id_CNTAIPPDPE_2023",
                                label = "Módulo",
-                               choices = str_c("Módulo ", seq(3))
+                               choices = str_c(
+                                 "Módulo ",
+                                 seq(
+                                   module_count[module_count$Censo == "CNTAIPPDPE", ][[2]]
+                                 )
+                               )
                              )
                            )
                          )
@@ -288,442 +328,263 @@ dashboardPage(
 
 # NAVBARMENU Cuestionarios -----------------------------------------------------------
 
-#           navbarMenu(
-#             "Cuestionarios",
-#             icon = icon("chart-column"),
-#             tabPanel(
-#               "Revisión OC",
-#               tabsetPanel(
-#                 type = "pills",
-#                 tabPanel(
-#                   "Cuestionarios enviados a revisión OC",
-#                   br(),
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       width = 12,
-#                       sliderInput(
-#                         "id_slider_date_questionnaires_2023",
-#                         label = "Línea de tiempo por semana",
-#                         min   = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3), # CNSIPEE start CE
-#                         max   = ceiling_date(tail(DIIE_dates$diffusion, 1), "week", week_start = 1), # last diffusion
-#                         value = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3),
-#                         step  = weeks(1)
-#                       ),
-#                       p(strong("Cantidad de cuestionarios enviados a revisión OC por semana: "),
-#                         strong(textOutput("text_count_questionnaires_2023", inline = TRUE)),
-#                         style = "color: #3c8dbc")
-#                     ),
-#                     mainPanel(
-#                       style = "height: 400px",
-#                       width = 12,
-#                       plotlyOutput(
-#                         "plot_arrival_questionnaires_2023",
-#                         height = "400px"
-#                       )
-#                     )
-#                   )
-#                 ),
-#                 tabPanel(
-#                   "Comparativo global 2023 vs 2022",
-#                   br(),
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       width = 12,
-#                       sliderInput(
-#                         "id_slider_date_questionnaires_weeks",
-#                         label = "Línea de tiempo por semana",
-#                         min   = 1,
-#                         max   = 30,
-#                         value = 1
-#                       ),
-#                       p(strong("Año 2023, cantidad de cuestionarios enviados a revisión OC por semana: "),
-#                         strong(textOutput("text_count_questionnaires_weeks_2023", inline = TRUE)),
-#                         style = "color: #3c8dbc"
-#                       ),
-#                       p(strong("Año 2022, cantidad de cuestionarios enviados a revisión OC por semana: "),
-#                         strong(textOutput("text_count_questionnaires_weeks_2022", inline = TRUE)),
-#                         style = "color: #5fa4cc"
-#                       )
-#                     ),
-#                     mainPanel(
-#                       style = "height: 400px",
-#                       width = 12,
-#                       fluidRow(
-#                         column(
-#                           width = 6,
-#                           plotlyOutput(
-#                             "plot_arrival_questionnaires_weeks",
-#                             height = "400px"
-#                           )
-#                         ),
-#                         column(
-#                           width = 6,
-#                           plotlyOutput(
-#                             "plot_arrival_questionnaires_weeks_2022",
-#                             height = "400px"
-#                           )
-#                         )
-#                       )
-#                     )
-#                   )
-#                 ),
-#                 tabPanel(
-#                   "Cuestionarios enviados a revisión OC por entidad",
-#                   br(),
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       width = 3,
-#                       selectInput(
-#                         "id_questionnaires_vs_entities_2023",
-#                         "Entidad",
-#                         choices = c("NACIONAL", levels(entities[[1]]))
-#                       )
-#                     ),
-#                     mainPanel(
-#                       width = 12,
-#                       plotlyOutput(height = "700px",
-#                         "plot_arrival_questionnaires_entitie_2023"
-#                       )
-#                     )
-#                   )
-#                 )
-#               )
-#             ),
-#
-# # En proceso de firma y sello (1) -----------------------------------------
-#
-#             tabPanel(
-#               "En proceso de firma y sello (1)",
-#               tabsetPanel(
-#                 type = "pills",
-#                 tabPanel(
-#                   "Cuestionarios en proceso de firma y sello (1)",
-#                   br(),
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       width = 12,
-#                       fluidRow(
-#                         # Controlador por semana o día
-#                         column(
-#                           width = 2,
-#                           awesomeRadio(
-#                             inputId = "id_controller_plot_semana_day",
-#                             label = "Segmentar",
-#                             choices = c("Por semana", "Por día")
-#                           )
-#                         ),
-#                         # TabsetPanel por semana y por día.
-#                         column(
-#                           width = 10,
-#                           tabsetPanel(
-#                             id = "id_plot_questionnaries_firma_sello_select",
-#                             type = "hidden",
-#                             # Panel por semana
-#                             tabPanel(
-#                               "Por semana",
-#                               selectInput(
-#                                 "id_questionnaires_firma_sello_census",
-#                                 "Censo",
-#                                 choices = c("GLOBAL", levels(DIIE_dates[[1]])),
-#                                 width = "150px"
-#                               ),
-#                               p(strong("Acumulado de cuestionarios en proceso de firma y sello (1): "),
-#                                 strong(textOutput("text_count_firma_sello_census", inline = TRUE)),
-#                                 style = "color: #a71106")
-#                             ),
-#                             # Panel por día
-#                             tabPanel(
-#                               "Por día",
-#                               sliderInput(
-#                                 "id_slider_date_questionnaires_firma_sello",
-#                                 label = "Línea de tiempo",
-#                                 min   = DIIE_dates[[3, 2]], # CNSIPEE start CE
-#                                 max   = tail(pull(DIIE_dates), 1), # last diffusion
-#                                 value = c(
-#                                   DIIE_dates[[3, 2]],
-#                                   tail(pull(DIIE_dates), 1)
-#                                 ),
-#                                 step  = days(1)
-#                               ),
-#                               tabsetPanel(
-#                                 id = "id_text_questionnaires_firma_sello_range",
-#                                 type = "hidden",
-#                                 tabPanel(
-#                                   "accumulated",
-#                                   p(
-#                                     strong("Acumulado de cuestionarios en proceso de firma y sello (1): "),
-#                                     strong(textOutput("text_count_firma_sello_accumulated", inline = TRUE)),
-#                                     style = "color: #a71106"
-#                                   )
-#                                 ),
-#                                 tabPanel(
-#                                   "range",
-#                                   p(
-#                                     strong("Rango de cuestionarios en proceso de firma y sello (1): "),
-#                                     strong(textOutput("text_count_firma_sello_range", inline = TRUE)),
-#                                     style = "color: #5fa4cc"
-#                                   )
-#                                 )
-#                               )
-#                             )
-#                           )
-#                         )
-#                       )
-#                     ),
-#                     mainPanel(
-#                       width = 12,
-#                       tabsetPanel(
-#                         id = "id_plot_DT_questionnaries_firma_sello_select",
-#                         type = "hidden",
-#                         tabPanel(
-#                           "Por semana",
-#                           tabsetPanel(
-#                             id = "id_plot_DT",
-#                             type = "hidden",
-#                             tabPanel(
-#                               "global",
-#                               plotlyOutput(
-#                                 "plot_questionnaires_firma_sello_week_global"
-#                               )
-#                             ),
-#                             tabPanel(
-#                               "census",
-#                               fluidRow(
-#                                 column(
-#                                   width = 5,
-#                                   plotlyOutput(
-#                                     "plot_questionnaires_firma_sello_week_census"
-#                                   )
-#                                 ),
-#                                 column(
-#                                   width = 7,
-#                                   dataTableOutput("table_questionnaires_set_free_census")
-#                                 )
-#                               )
-#                             )
-#                           )
-#                         ),
-#                         tabPanel(
-#                           "Por día",
-#                           fluidRow(
-#                             column(
-#                               width = 6,
-#                               plotlyOutput(
-#                                 "plot_questionnaires_firma_sello_day"
-#                               )
-#                             ),
-#                             column(
-#                               width = 6,
-#                               dataTableOutput("table_questionnaires_set_free_registro")
-#                             )
-#                           )
-#                         )
-#                       )
-#                     )
-#                   )
-#                 ),
-#                 tabPanel(
-#                   "Cuestionarios en proceso de firma y sello (1) por entidad",
-#                   br(),
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       width = 3,
-#                       selectInput(
-#                         "id_questionnaires_firma_sello_entity",
-#                         "Entidad",
-#                         choices = c("NACIONAL", levels(entities[[1]]))
-#                       )
-#                     ),
-#                     mainPanel(
-#                       width = 12,
-#                       plotlyOutput(height = "700px",
-#                         "plot_questionnaires_firma_sello_entity"
-#                       )
-#                     )
-#                   )
-#                 )
-#               )
-#             )
-#           ),
+          navbarMenu(
+            "Cuestionarios",
+            icon = icon("chart-column"),
+            tabPanel(
+              "Revisión OC",
+              tabsetPanel(
+                type = "pills",
+                tabPanel(
+                  "Cuestionarios enviados a revisión OC",
+                  br(),
+                  sidebarLayout(
+                    sidebarPanel(
+                      width = 12,
+                      sliderInput(
+                        "id_slider_date_questionnaires_2023",
+                        label = "Línea de tiempo por semana",
+                        min   = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3), # CNSIPEE start CE
+                        max   = ceiling_date(tail(DIIE_dates$diffusion, 1), "week", week_start = 1), # last diffusion
+                        value = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3),
+                        step  = weeks(1)
+                      ),
+                      p(strong("Cantidad de cuestionarios enviados a revisión OC por semana: "),
+                        strong(textOutput("text_count_questionnaires_2023", inline = TRUE)),
+                        style = "color: #3c8dbc")
+                    ),
+                    mainPanel(
+                      style = "height: 400px",
+                      width = 12,
+                      plotlyOutput(
+                        "plot_arrival_questionnaires_2023",
+                        height = "400px"
+                      )
+                    )
+                  )
+                ),
+                tabPanel(
+                  "Comparativo global 2023 vs 2022",
+                  br(),
+                  sidebarLayout(
+                    sidebarPanel(
+                      width = 12,
+                      sliderInput(
+                        "id_slider_date_questionnaires_weeks",
+                        label = "Línea de tiempo por semana",
+                        min   = 1,
+                        max   = 30,
+                        value = 1
+                      ),
+                      p(strong("Año 2023, cantidad de cuestionarios enviados a revisión OC por semana: "),
+                        strong(textOutput("text_count_questionnaires_weeks_2023", inline = TRUE)),
+                        style = "color: #3c8dbc"
+                      ),
+                      p(strong("Año 2022, cantidad de cuestionarios enviados a revisión OC por semana: "),
+                        strong(textOutput("text_count_questionnaires_weeks_2022", inline = TRUE)),
+                        style = "color: #5fa4cc"
+                      )
+                    ),
+                    mainPanel(
+                      style = "height: 400px",
+                      width = 12,
+                      fluidRow(
+                        column(
+                          width = 6,
+                          plotlyOutput(
+                            "plot_arrival_questionnaires_weeks",
+                            height = "400px"
+                          )
+                        ),
+                        column(
+                          width = 6,
+                          plotlyOutput(
+                            "plot_arrival_questionnaires_weeks_2022",
+                            height = "400px"
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+                tabPanel(
+                  "Cuestionarios enviados a revisión OC por entidad",
+                  br(),
+                  sidebarLayout(
+                    sidebarPanel(
+                      width = 3,
+                      selectInput(
+                        "id_questionnaires_vs_entities_2023",
+                        "Entidad",
+                        choices = c("NACIONAL", levels(entities[[1]]))
+                      )
+                    ),
+                    mainPanel(
+                      width = 12,
+                      plotlyOutput(height = "700px",
+                        "plot_arrival_questionnaires_entitie_2023"
+                      )
+                    )
+                  )
+                )
+              )
+            ),
 
+# En proceso de firma y sello (1) -----------------------------------------
 
-
-# NAVBARMENU Evaluación DOE -----------------------------------------------
-
-          # navbarMenu(
-          #   "Evaluación operativa",
-          #   icon = icon("clipboard-check"),
-          #   tabPanel(
-          #     "Análisis",
-          #     sidebarLayout(
-          #       sidebarPanel(
-          #         width = 2,
-          #         radioButtons(
-          #           "id_select_panel_entity",
-          #           label = "Nivel de análisis",
-          #           choices = c(
-          #             "Nacional",
-          #             "Regional",
-          #             "Estatal"
-          #           )
-          #         ),
-          #         fluidRow(
-          #           column(
-          #             width = 12,
-          #             selectInput(
-          #               "id_census_evaluation_DOE",
-          #               "Censo",
-          #               choices = levels(id_folio_extended[["Censo"]])
-          #             )
-          #           ),
-          #           column(
-          #             width = 12,
-          #             tabsetPanel(
-          #               id = "id_tab_evaluacion",
-          #               type = "hidden",
-          #               tabPanel(
-          #                 "Nacional",
-          #               ),
-          #               tabPanel(
-          #                 "Regional",
-          #                 selectInput(
-          #                   "id_regional_evaluation_DOE",
-          #                   "Regional",
-          #                   choices = levels(pull(federal_entities))
-          #                 )
-          #               ),
-          #               tabPanel(
-          #                 "Estatal",
-          #                 selectInput(
-          #                   "id_entity_evaluation_DOE",
-          #                   "Entidades",
-          #                   choices = levels(federal_entities[["Entidad"]])
-          #                 )
-          #               )
-          #             )
-          #           )
-          #         )
-          #       ),
-          #       mainPanel(
-          #         width = 10,
-          #         tabsetPanel(
-          #           type = "pills",
-          #           # Graphics "Concertación de citas y entrega de cuestionarios".
-          #           tabPanel(
-          #             "Concertación de citas y entrega de cuestionarios",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_citas_cuestionarios",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             fluidRow(
-          #               column(
-          #                 width = 5,
-          #                 plotOutput(
-          #                   "plot_concertacion_entrega",
-          #                   height = "600px"
-          #                 )
-          #               ),
-          #               column(
-          #                 width = 7,
-          #                 dataTableOutput("table_concertacion_entrega")
-          #               )
-          #             )
-          #           ),
-          #           # Graphics "Evolución del levantamiento".
-          #           tabPanel(
-          #             "Evolución del levantamiento",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_evolucion_levantamiento",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             plotlyOutput(
-          #               "plot_evolucion_levantamiento",
-          #               height = "300px"
-          #             ),
-          #             dataTableOutput("table_evolucion_levantamiento")
-          #           ),
-          #           # Graphics "Recuperación oportuna de la información".
-          #           tabPanel(
-          #             "Recuperación oportuna de la información",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_recuperacion_informacion",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             plotlyOutput(
-          #               "plot_recuperacion_informacion_oportuna",
-          #               height = "300px"
-          #             ),
-          #             dataTableOutput("table_recuperacion_informacion")
-          #           ),
-          #           # Graphics "Intervalos promedio de recuperación".
-          #           tabPanel(
-          #             "Intervalos promedio de recuperación",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_intervalos_recuperacion",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             plotlyOutput(
-          #               "plot_promedio_recuperacion",
-          #               height = "700px"
-          #             )
-          #           ),
-          #           # Graphics "Duración del levantamiento por etapas".
-          #           tabPanel(
-          #             "Duración del levantamiento por etapas",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_levantamiento_estapas",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             plotlyOutput(
-          #               "plot_levantamiento_estapas"
-          #             )
-          #           ),
-          #           # Graphics "Revisiones realizadas a los cuestionarios".
-          #           tabPanel(
-          #             "Revisiones realizadas a los cuestionarios",
-          #             br(),
-          #             actionBttn(
-          #               inputId = "info_button_revisiones_cuestionarios",
-          #               label   = "",
-          #               icon    = icon("info-circle"),
-          #               style   = "jelly"
-          #             ),
-          #             br(),
-          #             br(),
-          #             plotlyOutput(
-          #               "plot_revisiones_realizadas"
-          #             )
-          #           )
-          #         )
-          #       )
-          #     )
-          #   )
-          # ),
+            tabPanel(
+              "En proceso de firma y sello (1)",
+              tabsetPanel(
+                type = "pills",
+                tabPanel(
+                  "Cuestionarios en proceso de firma y sello (1)",
+                  br(),
+                  sidebarLayout(
+                    sidebarPanel(
+                      width = 12,
+                      fluidRow(
+                        # Controlador por semana o día
+                        column(
+                          width = 2,
+                          awesomeRadio(
+                            inputId = "id_controller_plot_semana_day",
+                            label = "Segmentar",
+                            choices = c("Por semana", "Por día")
+                          )
+                        ),
+                        # TabsetPanel por semana y por día.
+                        column(
+                          width = 10,
+                          tabsetPanel(
+                            id = "id_plot_questionnaries_firma_sello_select",
+                            type = "hidden",
+                            # Panel por semana
+                            tabPanel(
+                              "Por semana",
+                              selectInput(
+                                "id_questionnaires_firma_sello_census",
+                                "Censo",
+                                choices = c("GLOBAL", levels(DIIE_dates[[1]])),
+                                width = "150px"
+                              ),
+                              p(strong("Acumulado de cuestionarios en proceso de firma y sello (1): "),
+                                strong(textOutput("text_count_firma_sello_census", inline = TRUE)),
+                                style = "color: #a71106")
+                            ),
+                            # Panel por día
+                            tabPanel(
+                              "Por día",
+                              sliderInput(
+                                "id_slider_date_questionnaires_firma_sello",
+                                label = "Línea de tiempo",
+                                min   = DIIE_dates[[3, 2]], # CNSIPEE start CE
+                                max   = tail(pull(DIIE_dates), 1), # last diffusion
+                                value = c(
+                                  DIIE_dates[[3, 2]],
+                                  tail(pull(DIIE_dates), 1)
+                                ),
+                                step  = days(1)
+                              ),
+                              tabsetPanel(
+                                id = "id_text_questionnaires_firma_sello_range",
+                                type = "hidden",
+                                tabPanel(
+                                  "accumulated",
+                                  p(
+                                    strong("Acumulado de cuestionarios en proceso de firma y sello (1): "),
+                                    strong(textOutput("text_count_firma_sello_accumulated", inline = TRUE)),
+                                    style = "color: #a71106"
+                                  )
+                                ),
+                                tabPanel(
+                                  "range",
+                                  p(
+                                    strong("Rango de cuestionarios en proceso de firma y sello (1): "),
+                                    strong(textOutput("text_count_firma_sello_range", inline = TRUE)),
+                                    style = "color: #5fa4cc"
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ),
+                    mainPanel(
+                      width = 12,
+                      tabsetPanel(
+                        id = "id_plot_DT_questionnaries_firma_sello_select",
+                        type = "hidden",
+                        tabPanel(
+                          "Por semana",
+                          tabsetPanel(
+                            id = "id_plot_DT",
+                            type = "hidden",
+                            tabPanel(
+                              "global",
+                              plotlyOutput(
+                                "plot_questionnaires_firma_sello_week_global"
+                              )
+                            ),
+                            tabPanel(
+                              "census",
+                              fluidRow(
+                                column(
+                                  width = 5,
+                                  plotlyOutput(
+                                    "plot_questionnaires_firma_sello_week_census"
+                                  )
+                                ),
+                                column(
+                                  width = 7,
+                                  dataTableOutput("table_questionnaires_set_free_census")
+                                )
+                              )
+                            )
+                          )
+                        ),
+                        tabPanel(
+                          "Por día",
+                          fluidRow(
+                            column(
+                              width = 6,
+                              plotlyOutput(
+                                "plot_questionnaires_firma_sello_day"
+                              )
+                            ),
+                            column(
+                              width = 6,
+                              dataTableOutput("table_questionnaires_set_free_registro")
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+                tabPanel(
+                  "Cuestionarios en proceso de firma y sello (1) por entidad",
+                  br(),
+                  sidebarLayout(
+                    sidebarPanel(
+                      width = 3,
+                      selectInput(
+                        "id_questionnaires_firma_sello_entity",
+                        "Entidad",
+                        choices = c("NACIONAL", levels(entities[[1]]))
+                      )
+                    ),
+                    mainPanel(
+                      width = 12,
+                      plotlyOutput(height = "700px",
+                        "plot_questionnaires_firma_sello_entity"
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          ),
 
 
 # Actualización -----------------------------------------------------------

@@ -56,20 +56,20 @@ function(input, output, session) {
     str_c("Actualización ", data()[[3]])
   })
 
-  hideTab(inputId = "id_navbar_2023", target = "Observaciones")
-  hideTab(inputId = "id_navbar_2023", target = "Cuestionarios")
-  hideTab(inputId = "id_navbar_2023", target = "Evaluación operativa")
+  hideTab(inputId = "id_navbar_current_year", target = "Observaciones")
+  hideTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
+  hideTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
 
   observeEvent(is_null(data()), {
-    hideTab(inputId = "id_navbar_2023", target = "Observaciones")
-    hideTab(inputId = "id_navbar_2023", target = "Cuestionarios")
-    hideTab(inputId = "id_navbar_2023", target = "Evaluación operativa")
+    hideTab(inputId = "id_navbar_current_year", target = "Observaciones")
+    hideTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
+    hideTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
   })
 
   observeEvent(data(), {
-    showTab(inputId = "id_navbar_2023", target = "Observaciones")
-    showTab(inputId = "id_navbar_2023", target = "Cuestionarios")
-    showTab(inputId = "id_navbar_2023", target = "Evaluación operativa")
+    showTab(inputId = "id_navbar_current_year", target = "Observaciones")
+    showTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
+    showTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
   })
 
   # Info upload "Historial de seguimiento con extensión 'xlsx'".

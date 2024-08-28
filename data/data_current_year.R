@@ -111,6 +111,23 @@ questionnaires <- tibble(
   )
 )
 
+# Module count by census.
+module_count <- questionnaires %>%
+  transmute(Cuestionario = str_sub(Cuestionarios, 1, 2)) %>%
+  transmute(Cuestionario = as.double(Cuestionario)) %>%
+  count(Cuestionario) %>%
+  transmute(Censo = Cuestionario %/% 10) %>%
+  count(Censo, name = "n_modulos") %>%
+  mutate(Censo = str_replace_all(Censo,
+                                 c("1" = "CNGE",
+                                   "2" = "CNSPE",
+                                   "3" = "CNSIPEE",
+                                   "4" = "CNPJE",
+                                   "5" = "CNIJE",
+                                   "6" = "CNPLE",
+                                   "7" = "CNDHE",
+                                   "8" = "CNTAIPPDPE")))
+
 # Database on everybody "folios" (update every year!).
 id_folio <- federal_entities %>%
   transmute(id_estado = as.character(id_estado)) %>%
@@ -131,7 +148,7 @@ id_folio_extended <- id_folio %>%
                                    "5" = "CNIJE",
                                    "6" = "CNPLE",
                                    "7" = "CNDHE",
-                                   "8" = "CNTAIPPDPE" ))) %>%
+                                   "8" = "CNTAIPPDPE"))) %>%
   mutate(id_estado = factor(id_estado, levels = levels(federal_entities[["id_estado"]]))) %>%
   mutate(Censo_n   = factor(Censo_n  , levels = 1:8)) %>%
   mutate(Censo     = factor(Censo    , levels = levels(pull(DOE_dates, Censo)))) %>%
