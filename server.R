@@ -283,35 +283,35 @@ function(input, output, session) {
     count_arrival_questionnaires_week(database_questionnaires(), input$id_slider_date_questionnaires_2023)
   })
 
-  output$plot_arrival_questionnaires_2023 <- renderPlotly({
+  output$plot_arrival_questionnaires <- renderPlotly({
     validate(need(database_questionnaires(), "Sin información"))
     x <- input$id_slider_date_questionnaires_2023
-    plot_arrival_questionnaires_2023(database_questionnaires(), x)
+    plot_arrival_questionnaires_current_year(database_questionnaires(), x)
   })
 
 
-# Comparativo global 2023 VS 2022 -------------------------------------------------------
+# Comparativo global 2023 VS 2024 -------------------------------------------------------
 
   output$text_count_questionnaires_weeks_2023 <- renderText({
     validate(need(database_questionnaires(), "0"))
     x <- input$id_slider_date_questionnaires_weeks
-    count_arrival_questionnaires_week(database_questionnaires(), ymd("2023-03-20") + weeks(x))
+    count_arrival_questionnaires_week(database_questionnaires(), ymd("2024-02-19") + weeks(x)) # (update every year!).
   })
 
   output$text_count_questionnaires_weeks_2022 <- renderText({
     x <- input$id_slider_date_questionnaires_weeks
-    count_arrival_questionnaires_week(ymd("2022-03-07") + weeks(x))
+    count_arrival_questionnaires_week(database_questionnaires_previous_year, ymd("2023-03-06") + weeks(x)) # (update every year!).
   })
 
   output$plot_arrival_questionnaires_weeks <- renderPlotly({
     validate(need(database_questionnaires(), "Sin información"))
     x <- input$id_slider_date_questionnaires_weeks
-    plot_arrival_questionnaires_2023(database_questionnaires(), ymd("2023-03-20") + weeks(x), "2023")
+    plot_arrival_questionnaires_current_year(database_questionnaires(), ymd("2024-02-19") + weeks(x), "2024") # (update every year!).
   })
 
-  output$plot_arrival_questionnaires_weeks_2022 <- renderPlotly({
+  output$plot_arrival_questionnaires_weeks_previous_year <- renderPlotly({
     x <- input$id_slider_date_questionnaires_weeks
-    plot_arrival_questionnaires(ymd("2022-03-07") + weeks(x), "2022")
+    plot_arrival_questionnaires_previous_year(database_questionnaires_previous_year, ymd("2023-03-06") + weeks(x), "2023") # (update every year!).
   })
 
 

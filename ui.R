@@ -357,14 +357,14 @@ dashboardPage(
                       style = "height: 400px",
                       width = 12,
                       plotlyOutput(
-                        "plot_arrival_questionnaires_2023",
+                        "plot_arrival_questionnaires",
                         height = "400px"
                       )
                     )
                   )
                 ),
                 tabPanel(
-                  "Comparativo global 2023 vs 2022",
+                  "Comparativo global 2023 vs 2024",
                   br(),
                   sidebarLayout(
                     sidebarPanel(
@@ -376,11 +376,11 @@ dashboardPage(
                         max   = 30,
                         value = 1
                       ),
-                      p(strong("Año 2023, cantidad de cuestionarios enviados a revisión OC por semana: "),
+                      p(strong("Año 2024, cantidad de cuestionarios enviados a revisión OC por semana: "),
                         strong(textOutput("text_count_questionnaires_weeks_2023", inline = TRUE)),
                         style = "color: #3c8dbc"
                       ),
-                      p(strong("Año 2022, cantidad de cuestionarios enviados a revisión OC por semana: "),
+                      p(strong("Año 2023, cantidad de cuestionarios enviados a revisión OC por semana: "),
                         strong(textOutput("text_count_questionnaires_weeks_2022", inline = TRUE)),
                         style = "color: #5fa4cc"
                       )
@@ -399,7 +399,7 @@ dashboardPage(
                         column(
                           width = 6,
                           plotlyOutput(
-                            "plot_arrival_questionnaires_weeks_2022",
+                            "plot_arrival_questionnaires_weeks_previous_year",
                             height = "400px"
                           )
                         )

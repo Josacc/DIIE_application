@@ -13,9 +13,9 @@ options(rsconnect.locale.cache = FALSE, rsconnect.locale = "es_MX.utf8")
 Sys.setlocale(locale = "es_MX.utf8")
 
 
-# CNGAE 2023 ---------------------------------------------------------------
+# CNGAE ---------------------------------------------------------------
 
-# Databases 2023
+# Databases current year
 source("data/data_current_year.R")
 
 
@@ -55,6 +55,61 @@ source("functions/top_ten_questions.R")
 source("functions/entities_vs_observations.R")
 
 
+# Data about previous year -------------------------------------------------
+
+# Data base previous year
+database_previous_year <- data_and_update("historial_seguimiento/xIktan_20231005104808909_reporteSegumiento.xlsx")[[1]]
+
+# Folios "No aplica" previous year
+vec_folios_no_aplica_previous_year <- DT_folio_no_aplica(database_previous_year) %>%
+  pull()
+
+# database_2023 <-
+database_questionnaires_previous_year <- database_previous_year %>%
+  filter(str_detect(Estatus, "Revisión OC"), Perfil == "RESPONSABLE OPERATIVO") %>%
+  left_join(working_dates_previous_year, by = "Registro") %>% # Se modificó "Registro" para considerar solo días hábiles.
+  select(-Registro) %>%
+  rename(Registro = aux_var) %>%
+  filter(!(Folio %in% vec_folios_no_aplica_previous_year))
+
+# Plot about arrival general of questionnaires in previous year
+plot_arrival_questionnaires_previous_year <- function(data, .week, .title = "") { #ajustar similar a la función sobre firma y sello
+
+  suppressWarnings({
+    .plot <- data %>%
+      count(Registro) %>%
+      rename(`Cuestionarios enviados a revisión OC` = names(.)[2]) %>%
+      ggplot(aes(Registro, `Cuestionarios enviados a revisión OC`)) +
+      geom_rect(aes(xmin = .week, xmax = .week + weeks(1),
+                    ymin = 0, ymax = 50),
+                fill = "grey", alpha = 3/4) +
+      annotate("segment", x = DIIE_dates_previous_year[[2, 5]], xend = DIIE_dates_previous_year[[2, 5]], y = 0, yend = 50, colour = "red", alpha = 1/2) +
+      annotate("segment", x = DIIE_dates_previous_year[[3, 5]], xend = DIIE_dates_previous_year[[3, 5]], y = 0, yend = 50, colour = "red", alpha = 1/2) +
+      annotate("segment", x = DIIE_dates_previous_year[[4, 5]], xend = DIIE_dates_previous_year[[4, 5]], y = 0, yend = 50, colour = "red", alpha = 1/2) +
+      annotate("segment", x = DIIE_dates_previous_year[[5, 5]], xend = DIIE_dates_previous_year[[5, 5]], y = 0, yend = 50, colour = "red", alpha = 1/2) +
+      annotate("text", x = DIIE_dates_previous_year[[2, 5]], y = 52, label = str_c("Cierre cap. \n", DIIE_dates_previous_year[[2, 1]]), size = 2, color = "red") +
+      annotate("text", x = DIIE_dates_previous_year[[3, 5]], y = 52, label = str_c("Cierre cap. \n", DIIE_dates_previous_year[[3, 1]]), size = 2, color = "red") +
+      annotate("text", x = DIIE_dates_previous_year[[4, 5]], y = 52, label = str_c("Cierre cap. \n", DIIE_dates_previous_year[[4, 1]]), size = 2, color = "red") +
+      annotate("text", x = DIIE_dates_previous_year[[5, 5]], y = 52, label = str_c("Cierre cap. \n", DIIE_dates_previous_year[[5, 1]]), size = 2, color = "red") +
+      geom_point(aes(color = -`Cuestionarios enviados a revisión OC`,
+                     label1 = Registro, label2 = `Cuestionarios enviados a revisión OC`),
+                 show.legend = FALSE) +
+      scale_x_date(date_breaks = "week", date_labels = "%d %b") +
+      ggtitle(.title) +
+      theme_classic() +
+      theme(
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
+        axis.title.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        plot.title = element_text(size = 10)
+      )
+  })
+
+  return(ggplotly(.plot, tooltip = c("label1", "label2")))
+}
+
+
 # EDA about questionnaires "Revisión OC" 2023-------------------------------------------------
 
 # Database about questionnaires.
@@ -82,8 +137,8 @@ count_arrival_questionnaires_week <- function(data, .week) {
   return(.n %>% .[[2]])
 }
 
-# plot about arrival general of questionnaires
-plot_arrival_questionnaires_2023 <- function(data, .week, .title = "") { #ajustar similar a la función sobre firma y sello
+# Plot about arrival general of questionnaires in current year
+plot_arrival_questionnaires_current_year <- function(data, .week, .title = "") { #ajustar similar a la función sobre firma y sello
 
   suppressWarnings({
     .plot <- data %>%
@@ -120,7 +175,7 @@ plot_arrival_questionnaires_2023 <- function(data, .week, .title = "") { #ajusta
 }
 
 # Local analysis
-# plot_arrival_questionnaires_2023(database_questionnaires_2023, ymd("2023-03-28") + weeks(1), "2023")
+# plot_arrival_questionnaires_current_year(database_questionnaires_2023, ymd("2023-03-28") + weeks(1), "2023")
 
 
 # plot about arrival of questionnaires grid census
