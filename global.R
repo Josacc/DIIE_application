@@ -429,13 +429,13 @@ plot_questionnaires_firma_sello_week_project <- function(data, project, .title =
 
   .plot <- function(.census) {
     plot <- ggplot(.data, aes(Domingo, `Cuestionarios acumulados en proceso de firma y sello (1)`)) +
-      annotate("segment", x = DIIE_dates[[which(census[1] == .census), 5]], xend = DIIE_dates[[which(census[1] == .census), 5]],
+      annotate("segment", x = DIIE_dates[[which(DIIE_dates[1] == .census), 5]], xend = DIIE_dates[[which(DIIE_dates[1] == .census), 5]],
                y = 0, yend = ymax, colour = "orange", alpha = 1/2) +
-      annotate("segment", x = DIIE_dates[[which(census[1] == .census), 7]], xend = DIIE_dates[[which(census[1] == .census), 7]],
+      annotate("segment", x = DIIE_dates[[which(DIIE_dates[1] == .census), 7]], xend = DIIE_dates[[which(DIIE_dates[1] == .census), 7]],
                y = 0, yend = ymax, colour = "red", alpha = 1/2) +
-      annotate("text",    x = DIIE_dates[[which(census[1] == .census), 5]], y = ymax + 2,
+      annotate("text",    x = DIIE_dates[[which(DIIE_dates[1] == .census), 5]], y = ymax + 2,
                label = str_c("Cierre cap. \n", .census), size = 2, color = "orange") +
-      annotate("text",    x = DIIE_dates[[which(census[1] == .census), 7]], y = ymax + 2,
+      annotate("text",    x = DIIE_dates[[which(DIIE_dates[1] == .census), 7]], y = ymax + 2,
                label = str_c("Difusión \n", .census), size = 2, color = "red")
 
     return(plot)

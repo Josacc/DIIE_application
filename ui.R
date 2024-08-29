@@ -347,7 +347,8 @@ dashboardPage(
                         min   = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3), # CNSIPEE start CE
                         max   = ceiling_date(tail(DIIE_dates$diffusion, 1), "week", week_start = 1), # last diffusion
                         value = floor_date(DIIE_dates %>% filter(name == "CNSIPEE") %>% select(`start CE`) %>% .[[1]], "week", week_start = 1) + weeks(3),
-                        step  = weeks(1)
+                        step  = weeks(1),
+                        animate = TRUE
                       ),
                       p(strong("Cantidad de cuestionarios enviados a revisión OC por semana: "),
                         strong(textOutput("text_count_questionnaires_2023", inline = TRUE)),
@@ -374,7 +375,9 @@ dashboardPage(
                         label = "Línea de tiempo por semana",
                         min   = 1,
                         max   = 30,
-                        value = 1
+                        value = 1,
+                        step  = 1,
+                        animate = TRUE
                       ),
                       p(strong("Año 2024, cantidad de cuestionarios enviados a revisión OC por semana: "),
                         strong(textOutput("text_count_questionnaires_weeks_2023", inline = TRUE)),
