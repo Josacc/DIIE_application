@@ -1133,19 +1133,3 @@ plot_duracion_levantamiento_etapas <- function(dataframe, var_census, var_entiti
 #   "PUEBLA"
 # )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -151,7 +151,7 @@ id_folio_extended <- id_folio %>%
                                    "8" = "CNTAIPPDPE"))) %>%
   mutate(id_estado = factor(id_estado, levels = levels(federal_entities[["id_estado"]]))) %>%
   mutate(Censo_n   = factor(Censo_n  , levels = 1:8)) %>%
-  mutate(Censo     = factor(Censo    , levels = levels(pull(DOE_dates, Censo)))) %>%
+  mutate(Censo     = factor(Censo    , levels = levels(pull(DIIE_dates, name)))) %>%
   left_join(federal_entities, by = "id_estado") %>%
   select(-Abreviatura)
 
