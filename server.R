@@ -60,17 +60,20 @@ function(input, output, session) {
   hideTab(inputId = "id_navbar_current_year", target = "Observaciones")
   hideTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
   hideTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
+  hideTab(inputId = "id_navbar_current_year", target = "Interno")
 
   observeEvent(is_null(data()), {
     hideTab(inputId = "id_navbar_current_year", target = "Observaciones")
     hideTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
     hideTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
+    hideTab(inputId = "id_navbar_current_year", target = "Interno")
   })
 
   observeEvent(data(), {
     showTab(inputId = "id_navbar_current_year", target = "Observaciones")
     showTab(inputId = "id_navbar_current_year", target = "Cuestionarios")
     showTab(inputId = "id_navbar_current_year", target = "Evaluación operativa")
+    showTab(inputId = "id_navbar_current_year", target = "Interno")
   })
 
   # Info upload "Historial de seguimiento con extensión 'xlsx'".
