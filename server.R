@@ -4,6 +4,7 @@ library(readxl)
 library(plotly)
 library(tools)
 library(DT)
+library(shinyauthr)
 
 function(input, output, session) {
 
@@ -209,6 +210,56 @@ function(input, output, session) {
 
 # Ranking entidades --------------------------------------------------------------
 
+  credentials <- loginServer(
+    id = "login",
+    data = user_base,
+    user_col = user,
+    pwd_col = password,
+    log_out = reactive(logout_init())
+  )
+
+  logout_init <- logoutServer(
+    id = "logout",
+    active = reactive(credentials()$user_auth)
+  )
+
+  output$diie_interno <- renderUI({
+    req(credentials()$user_auth)
+    tabsetPanel(
+      type = "pills",
+      tabPanel(
+        "Ranking de entidades por preguntas observadas",
+        br(),
+        sidebarLayout(
+          sidebarPanel(
+            width = 2,
+            radioButtons(
+              "id_obs_vs_census_2023",
+              "Nivel de análisis",
+              choices = c("GLOBAL", levels(DIIE_dates[[1]]))
+            )
+          ),
+          mainPanel(
+            style = "height: 500px",
+            width = 10,
+            actionBttn(
+              inputId = "info_button_obs_enviadas_OC",
+              label   = "",
+              icon    = icon("info-circle"),
+              style   = "jelly"
+            ),
+            br(),
+            br(),
+            plotlyOutput(
+              height = "500px",
+              "plot_obs_vs_census_2023",
+            )
+          )
+        )
+      )
+    )
+  })
+
   reactive_obs_vs_census_2023 <- reactive({
     switch (input$id_obs_vs_census_2023,
             GLOBAL     = plot_entities_vs_obs(data()[[2]]),
@@ -224,12 +275,14 @@ function(input, output, session) {
   })
 
   output$plot_obs_vs_census_2023 <- renderPlotly({
+    req(credentials()$user_auth)
     validate(need(reactive_obs_vs_census_2023(), "Sin observaciones"))
     reactive_obs_vs_census_2023()
   })
 
   # Info Ranking entidades.
   observeEvent(input$info_button_obs_enviadas_OC, {
+    req(credentials()$user_auth)
     show_alert(
       session = session,
       title   = "",

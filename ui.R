@@ -8,6 +8,7 @@ library(shiny)
 library(shinyFeedback)
 library(DT)
 library(shinyfullscreen)
+library(shinyauthr)
 
 
 dashboardPage(
@@ -288,40 +289,6 @@ dashboardPage(
                   )
                 )
               )
-            ),
-
-            tabPanel(
-              "Ranking entidades",
-              h4(
-                p(strong("Ranking de entidades por preguntas observadas")),
-                style = "color: #3c8dbc; margin: 0rem; margin-top: -1rem; margin-bottom: 3rem;"
-              ),
-              sidebarLayout(
-                sidebarPanel(
-                  width = 2,
-                  radioButtons(
-                    "id_obs_vs_census_2023",
-                    "Nivel de análisis",
-                    choices = c("GLOBAL", levels(DIIE_dates[[1]]))
-                  )
-                ),
-                mainPanel(
-                  style = "height: 500px",
-                  width = 10,
-                  actionBttn(
-                    inputId = "info_button_obs_enviadas_OC",
-                    label   = "",
-                    icon    = icon("info-circle"),
-                    style   = "jelly"
-                  ),
-                  br(),
-                  br(),
-                  plotlyOutput(
-                    "plot_obs_vs_census_2023",
-                    height = "500px"
-                  )
-                )
-              )
             )
           ),
 
@@ -590,7 +557,33 @@ dashboardPage(
           ),
 
 
+# Interno -----------------------------------------------------------------
+
+          tabPanel(
+            "Interno",
+            icon = icon("chart-column"),
+            div(
+              class = "pull-right",
+              logoutUI(
+                id = "logout",
+                label = "Finalizar sesión",
+                icon = icon("sign-out-alt")
+              )
+            ),
+            loginUI(
+              id = "login",
+              title = "",
+              user_title = "Usuario",
+              pass_title = "Contraseña",
+              login_title = "Iniciar sesión",
+              error_message = "¡Usuario o contraseña no válidos!",
+            ),
+            uiOutput("diie_interno")
+          ),
+
+
 # Actualización -----------------------------------------------------------
+
           tabPanel(
             title = strong(uiOutput("update"), style = "color: #3c8dbc;font-size: 12px;"),
             h4(strong("Historial de seguimiento")),
