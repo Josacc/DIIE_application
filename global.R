@@ -12,6 +12,7 @@ library(shiny)
 options(rsconnect.locale.cache = FALSE, rsconnect.locale = "es_MX.utf8")
 Sys.setlocale(locale = "es_MX.utf8")
 
+source("data/user_base.R")
 
 # CNGAE ---------------------------------------------------------------
 
