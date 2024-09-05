@@ -1,12 +1,25 @@
 library(shiny)
 library(tidyverse)
+library(shinydashboard)
 library(readxl)
 library(plotly)
 library(tools)
 library(DT)
 library(shinyauthr)
+library(shinymanager)
+
 
 function(input, output, session) {
+
+  res_auth <- secure_server(
+    check_credentials = check_credentials(user_base_application)
+  )
+
+  auth <- callModule(
+    module = auth_server,
+    id = "auth",
+    check_credentials = check_credentials(user_base_application)
+  )
 
 
 # CNGAE 2023 --------------------------------------------------------------------
@@ -215,7 +228,7 @@ function(input, output, session) {
 
   credentials <- loginServer(
     id = "login",
-    data = user_base,
+    data = DIIE_user_base,
     user_col = user,
     pwd_col = password,
     log_out = reactive(logout_init())
@@ -1125,6 +1138,5 @@ function(input, output, session) {
       rownames = FALSE
     )
   )
-
 
 }

@@ -9,8 +9,33 @@ library(shinyFeedback)
 library(DT)
 library(shinyfullscreen)
 library(shinyauthr)
+library(shinymanager)
+library(shinythemes)
 
 
+secure_app(theme    = shinytheme("flatly"),
+           language = "es",
+           id = "auth",
+           tags_top =
+             tags$div(
+               tags$h4(
+                 "DIIE app",
+                 style = "align:center;color: #1e4a75;font-weight: bold;"
+               ),
+               tags$img(
+                 src = "logo.png", width = 250
+               )
+             ),
+           tags_bottom = tags$div(
+             tags$p(
+               "Cualquier pregunta, por favor contacte al ",
+               tags$a(
+                 href = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app",
+                 target="_top", "administrator"
+               )
+             )
+           ),
+           lan = use_language("es"),
 dashboardPage(
 
 # dashboard Header --------------------------------------------------------
@@ -566,7 +591,7 @@ dashboardPage(
               class = "pull-right",
               logoutUI(
                 id = "logout",
-                label = "Finalizar sesión",
+                label = "",
                 icon = icon("sign-out-alt")
               )
             ),
@@ -575,8 +600,8 @@ dashboardPage(
               title = "",
               user_title = "Usuario",
               pass_title = "Contraseña",
-              login_title = "Iniciar sesión",
-              error_message = "¡Usuario o contraseña no válidos!",
+              login_title = "Ingresar",
+              error_message = "¡Usuario o contraseña incorrecto!",
             ),
             uiOutput("diie_interno")
           ),
@@ -611,3 +636,4 @@ dashboardPage(
     )
   ) # End dashboardBody
 )# End dashboardPage
+)
