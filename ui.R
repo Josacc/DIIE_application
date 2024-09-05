@@ -9,8 +9,33 @@ library(shinyFeedback)
 library(DT)
 library(shinyfullscreen)
 library(shinyauthr)
+library(shinymanager)
+library(shinythemes)
 
 
+secure_app(
+  theme    = shinytheme("flatly"),
+  language = "es",
+  id       = "auth",
+  tags_top = tags$div(
+    tags$h4(
+      "DIIE app",
+      style = "align:center;color:#1e4a75;font-weight:bold;"
+    ),
+    tags$img(
+      src = "logo.png", width = 250
+    )
+  ),
+  tags_bottom = tags$div(
+    tags$p(
+      "Cualquier pregunta, por favor contacte al ",
+      tags$a(
+        href = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app",
+        target ="_top", "administrator"
+      )
+    )
+  ),
+  lan = use_language("es"),
 dashboardPage(
 
 # dashboard Header --------------------------------------------------------
@@ -30,7 +55,7 @@ dashboardPage(
         from    = "José Antonio Chávez Castillo",
         message = "jose.chavezca@inegi.org.mx",
         icon    = icon("user-gear"),
-        href    = "mailto:jose.chavezca@inegi.org.mx"
+        href    = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app"
       )
     )
   ),
@@ -611,3 +636,4 @@ dashboardPage(
     )
   ) # End dashboardBody
 )# End dashboardPage
+)

@@ -8,11 +8,26 @@ library(tidyverse)
 library(readxl)
 library(shiny)
 
+
 # Settings for shinyapss.io
-options(rsconnect.locale.cache = FALSE, rsconnect.locale = "es_MX.utf8")
+# options(rsconnect.locale.cache = FALSE, rsconnect.locale = "es_MX.utf8")
 Sys.setlocale(locale = "es_MX.utf8")
 
-source("data/user_base.R")
+
+# User bases ---------------------------------------------------------------
+
+source("data/application_user_base.R")
+
+set_labels(
+  language = "es",
+  "Please authenticate" = "",
+  "Username:" = "Usuario:",
+  "Password:" = "Contraseña:",
+  "Login" = "Ingresar"
+)
+
+source("data/DIIE_user_base.R")
+
 
 # CNGAE ---------------------------------------------------------------
 
