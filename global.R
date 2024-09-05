@@ -7,6 +7,7 @@ library(plotly)
 library(tidyverse)
 library(readxl)
 library(shiny)
+library(shinymanager)
 
 
 # Settings for shinyapss.io
@@ -1148,4 +1149,3 @@ plot_duracion_levantamiento_etapas <- function(dataframe, var_census, var_entiti
 #   "CNPJE",
 #   "PUEBLA"
 # )
-

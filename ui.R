@@ -30,7 +30,7 @@ secure_app(
     tags$p(
       "Cualquier pregunta, por favor contacte al ",
       tags$a(
-        href = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app",
+        href = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app%20autenticación",
         target ="_top", "administrator"
       )
     )
@@ -115,20 +115,17 @@ dashboardPage(
 
                      h2("INFORMACIÓN GENERAL", style = "text-align: center;"),
                      br(),
-                     "Las Jefaturas de Departamento de Estadísticas de Gobierno (JDEG)
-                     tienen como funciones sustantivas organizar y ejecutar las actividades
-                     relacionadas con la recuperación y validación de la información de los
-                     Censos Nacionales de Gobierno correspondientes a sus actividades.",
+                     "Como parte de las actividades de análisis y seguimiento
+                     del Departamento de Integración de Información Estadística (DIIE)
+                     se presentan indicadores que ponderan varios
+                     resultados obtenidos en el CNG de ambito estatal.",
                      br(),
-                     "En virtud de lo anterior y como parte del esquema de evaluación y
-                     seguimiento implementado por Oficinas Centrales (OC),
-                     se presentan algunos indicadores que permiten ponderar los resultados
-                     obtenidos por las JDEG en una perspectiva comparativa,
-                     con la finalidad de detectar",
-                     strong("áreas de oportunidad de los equipos de
-                     trabajo de OC y las JDEG,"),
-                     " así como obtener información
-                     que ayude a diseñar estrategias focalizadas al próximo levantamiento.",
+                     strong("Bajo un enfoque informativo,"),
+                     "se tiene el objetivo de detectar",
+                     strong("áreas de oportunidad "), "de los equipos de
+                     trabajo de Oficinas Centrales y los Departamentos Estatales,
+                     así como obtener información que ayude a diseñar estrategias
+                     focalizadas al próximo levantamiento.",
                      br(),
                      br(),
                      "Los análisis que se presentan en cada uno de los apartados
@@ -591,7 +588,7 @@ dashboardPage(
               class = "pull-right",
               logoutUI(
                 id = "logout",
-                label = "Finalizar sesión",
+                label = "",
                 icon = icon("sign-out-alt")
               )
             ),
