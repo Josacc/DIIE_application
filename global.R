@@ -10,8 +10,12 @@ library(shiny)
 library(shinymanager)
 
 
-# Settings for shinyapss.io
-# options(rsconnect.locale.cache = FALSE, rsconnect.locale = "es_MX.utf8")
+# Settings for shinyapss.io and Shiny Server
+options(
+  encoding = "UTF-8",
+  rsconnect.locale.cache = FALSE,
+  rsconnect.locale = "es_MX.utf8"
+)
 Sys.setlocale(locale = "es_MX.utf8")
 
 
