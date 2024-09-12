@@ -36,12 +36,12 @@ function(input, output, session) {
     req(identical(ext, "xlsx"))
     pre_data <- read_xlsx(input$file_upload$datapath)
     condition <- identical(names(pre_data)[2], "INSTITUTO NACIONAL DE ESTADÍSTICA Y GEOGRAFÍA") &&
-      identical(pre_data[[3,2]], "CNGAE 2024") &&
-      identical(pre_data[[7,1]], "Folio") &&
-      identical(pre_data[[7,3]], "Entidad") &&
-      identical(pre_data[[7,5]], "Usuario") &&
-      identical(pre_data[[7,6]], "Perfil") &&
-      identical(pre_data[[7,8]], "Registro") &&
+      identical(pre_data[[3,2]],  "CNGAE 2024") &&
+      identical(pre_data[[7,1]],  "Folio") &&
+      identical(pre_data[[7,3]],  "Entidad") &&
+      identical(pre_data[[7,5]],  "Usuario") &&
+      identical(pre_data[[7,6]],  "Perfil") &&
+      identical(pre_data[[7,8]],  "Registro") &&
       identical(pre_data[[7,10]], "Estatus") &&
       identical(pre_data[[7,12]], "Observación") &&
       identical(pre_data[[7,15]], "Contador de días")
