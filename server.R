@@ -224,102 +224,6 @@ function(input, output, session) {
   })
 
 
-# Ranking entidades --------------------------------------------------------------
-
-  credentials <- loginServer(
-    id = "login",
-    data = DIIE_user_base,
-    user_col = user,
-    pwd_col = password,
-    log_out = reactive(logout_init())
-  )
-
-  logout_init <- logoutServer(
-    id = "logout",
-    active = reactive(credentials()$user_auth)
-  )
-
-  output$diie_interno <- renderUI({
-    req(credentials()$user_auth)
-    tabsetPanel(
-      type = "pills",
-      tabPanel(
-        "Ranking de entidades por preguntas observadas",
-        br(),
-        sidebarLayout(
-          sidebarPanel(
-            width = 2,
-            radioButtons(
-              "id_obs_vs_census_2023",
-              "Nivel de análisis",
-              choices = c("GLOBAL", levels(DIIE_dates[[1]]))
-            )
-          ),
-          mainPanel(
-            style = "height: 500px",
-            width = 10,
-            actionBttn(
-              inputId = "info_button_obs_enviadas_OC",
-              label   = "",
-              icon    = icon("info-circle"),
-              style   = "jelly"
-            ),
-            br(),
-            br(),
-            plotlyOutput(
-              height = "500px",
-              "plot_obs_vs_census_2023",
-            )
-          )
-        )
-      )
-    )
-  })
-
-  reactive_obs_vs_census_2023 <- reactive({
-    switch (input$id_obs_vs_census_2023,
-            GLOBAL     = plot_entities_vs_obs(data()[[2]]),
-            CNGE       = plot_entities_vs_obs_grid(data()[[2]], "CNGE"),
-            CNSPE      = plot_entities_vs_obs_grid(data()[[2]], "CNSPE"),
-            CNSIPEE    = plot_entities_vs_obs_grid(data()[[2]], "CNSIPEE"),
-            CNPJE      = plot_entities_vs_obs_grid(data()[[2]], "CNPJE"),
-            CNIJE      = plot_entities_vs_obs_grid(data()[[2]], "CNIJE"),
-            CNPLE      = plot_entities_vs_obs_grid(data()[[2]], "CNPLE"),
-            CNDHE      = plot_entities_vs_obs_grid(data()[[2]], "CNDHE"),
-            CNTAIPPDPE = plot_entities_vs_obs_grid(data()[[2]], "CNTAIPPDPE")
-    )
-  })
-
-  output$plot_obs_vs_census_2023 <- renderPlotly({
-    req(credentials()$user_auth)
-    validate(need(reactive_obs_vs_census_2023(), "Sin observaciones"))
-    reactive_obs_vs_census_2023()
-  })
-
-  # Info Ranking entidades.
-  observeEvent(input$info_button_obs_enviadas_OC, {
-    req(credentials()$user_auth)
-    show_alert(
-      session = session,
-      title   = "",
-      text    = tags$div(
-        tags$h3("Información",
-                style = "color: #0076C8; font-weight: bold; text-align: center"),
-        tags$br(),
-        tags$br(),
-        `style` = "text-align: justify;
-        margin-left:  auto;
-        margin-right: auto;",
-        "La gráfica muestra por Censo el ranking de Entidades
-        respecto a la cantidad de preguntas que fueron observadas exclusivamente
-        por los responsables de revisión de OC."
-      ),
-      html  = TRUE,
-      width = "35%"
-    )
-  })
-
-
 # NAVBARMENU Cuestionarios ------------------------------------------------
 
 # Cuestionarios "REVISIÓN OC" ---------------------------------------------
@@ -1137,5 +1041,113 @@ function(input, output, session) {
     )
   )
 
+
+# INTERNO --------------------------------------------------------------
+
+  credentials <- loginServer(
+    id = "login",
+    data = DIIE_user_base,
+    user_col = user,
+    pwd_col = password,
+    log_out = reactive(logout_init())
+  )
+
+  logout_init <- logoutServer(
+    id = "logout",
+    active = reactive(credentials()$user_auth)
+  )
+
+  output$diie_interno <- renderUI({
+    req(credentials()$user_auth)
+    tabsetPanel(
+      type = "pills",
+      tabPanel(
+        "Ranking de entidades por preguntas observadas",
+        br(),
+        sidebarLayout(
+          sidebarPanel(
+            width = 2,
+            radioButtons(
+              "id_obs_vs_census_2023",
+              "Nivel de análisis",
+              choices = c("GLOBAL", levels(DIIE_dates[[1]]))
+            )
+          ),
+          mainPanel(
+            style = "height: 500px",
+            width = 10,
+            actionBttn(
+              inputId = "info_button_obs_enviadas_OC",
+              label   = "",
+              icon    = icon("info-circle"),
+              style   = "jelly"
+            ),
+            br(),
+            br(),
+            plotlyOutput(
+              height = "500px",
+              "plot_obs_vs_census_2023",
+            )
+          )
+        )
+      ),
+      tabPanel(
+        "Revisiones por OC",
+        br(),
+        dataTableOutput("table_q_aclaracion_oc")
+      )
+    )
+  })
+
+  # Ranking entidades
+  reactive_obs_vs_census_2023 <- reactive({
+    switch (input$id_obs_vs_census_2023,
+            GLOBAL     = plot_entities_vs_obs(data()[[2]]),
+            CNGE       = plot_entities_vs_obs_grid(data()[[2]], "CNGE"),
+            CNSPE      = plot_entities_vs_obs_grid(data()[[2]], "CNSPE"),
+            CNSIPEE    = plot_entities_vs_obs_grid(data()[[2]], "CNSIPEE"),
+            CNPJE      = plot_entities_vs_obs_grid(data()[[2]], "CNPJE"),
+            CNIJE      = plot_entities_vs_obs_grid(data()[[2]], "CNIJE"),
+            CNPLE      = plot_entities_vs_obs_grid(data()[[2]], "CNPLE"),
+            CNDHE      = plot_entities_vs_obs_grid(data()[[2]], "CNDHE"),
+            CNTAIPPDPE = plot_entities_vs_obs_grid(data()[[2]], "CNTAIPPDPE")
+    )
+  })
+
+  # Ranking entidades
+  output$plot_obs_vs_census_2023 <- renderPlotly({
+    req(credentials()$user_auth)
+    validate(need(reactive_obs_vs_census_2023(), "Sin observaciones"))
+    reactive_obs_vs_census_2023()
+  })
+
+  # Info Ranking entidades.
+  observeEvent(input$info_button_obs_enviadas_OC, {
+    req(credentials()$user_auth)
+    show_alert(
+      session = session,
+      title   = "",
+      text    = tags$div(
+        tags$h3("Información",
+                style = "color: #0076C8; font-weight: bold; text-align: center"),
+        tags$br(),
+        tags$br(),
+        `style` = "text-align: justify;
+        margin-left:  auto;
+        margin-right: auto;",
+        "La gráfica muestra por Censo el ranking de Entidades
+        respecto a la cantidad de preguntas que fueron observadas exclusivamente
+        por los responsables de revisión de OC."
+      ),
+      html  = TRUE,
+      width = "35%"
+    )
+  })
+
+  # Table questionnaires aclaracion oc
+  output$table_q_aclaracion_oc <- renderDataTable({
+    req(credentials()$user_auth)
+    db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))
+  })
 
 }
