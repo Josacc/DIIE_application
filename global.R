@@ -8,6 +8,7 @@ library(tidyverse)
 library(readxl)
 library(shiny)
 library(shinymanager)
+library(DT)
 
 
 # Settings for shinyapss.io and Shiny Server
