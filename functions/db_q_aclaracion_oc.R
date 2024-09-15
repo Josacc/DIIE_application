@@ -23,13 +23,16 @@ db_q_aclaracion_oc <- function(database, delete_q) {
     select(-all_of(delete_q)) %>%
     datatable(
       rownames = FALSE,
-      options = list(
-        ordering = F,
+      options  = list(
+        ordering   = F,
         pageLength = 32,
-        dom = "t",
-        autoWidth = TRUE,
-        # columnDefs = list(list(width = "10%", targets = "_all")),
-        language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'),
+        dom        = "ft",
+        autoWidth  = TRUE,
+        language   = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'),
+        columnDefs = list(
+          list(width = "10px", targets = c(0:34)),
+          list(className = 'dt-center', targets = c(1:34))
+        ),
         initComplete = JS(
           "function(settings, json) {",
           "$(this.api().table().header()).css({'font-size': '70%'});",
@@ -37,14 +40,17 @@ db_q_aclaracion_oc <- function(database, delete_q) {
       )
     ) %>%
     formatStyle(
-      columns = c(1:38),
-      fontSize = '70%'
-    )
-
-  database <- database %>%
+      columns         = c(1:38),
+      fontWeight      = "bold",
+      fontSize        = '70%'
+    ) %>%
     formatStyle(
-      columns = c(2:38),
+      columns         = c(2:38),
       backgroundColor = styleInterval(c(2, 3, 4), c("", "bisque", "yellow", "red"))
+    ) %>%
+    formatStyle(
+      columns         = c(15, 17, 19, 24, 31, 33),
+      `border-right`  = "3px solid #ddd"
     )
 
   return(database)

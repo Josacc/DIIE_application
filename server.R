@@ -1094,7 +1094,7 @@ function(input, output, session) {
       tabPanel(
         "Revisiones por OC",
         br(),
-        dataTableOutput("table_q_aclaracion_oc")
+        DTOutput("table_q_aclaracion_oc")
       )
     )
   })
@@ -1145,7 +1145,7 @@ function(input, output, session) {
   })
 
   # Table questionnaires aclaracion oc
-  output$table_q_aclaracion_oc <- renderDataTable({
+  output$table_q_aclaracion_oc <- renderDT({
     req(credentials()$user_auth)
     db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))
   })
