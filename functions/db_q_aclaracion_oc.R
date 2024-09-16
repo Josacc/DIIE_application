@@ -22,20 +22,26 @@ db_q_aclaracion_oc <- function(database, delete_q) {
     pivot_wider(names_from = Cuestionario, values_from = Revisiones) %>%
     select(-all_of(delete_q)) %>%
     datatable(
-      rownames = FALSE,
-      options  = list(
+      extensions = "SearchBuilder",
+      rownames   = FALSE,
+      options    = list(
         ordering   = F,
-        pageLength = 32,
-        dom        = "ft",
-        autoWidth  = TRUE,
-        language   = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'),
+        pageLength = 16,
+        dom        = "Qftip",
+        searchbuilder = TRUE,
+        scrollX    = 520,
+        scrollY    = 505,
+        language   = list(
+          url = '//cdn.datatables.net/plug-ins/2.1.6/i18n/es-MX.json',
+          paginate = list(previous = "", `next` = "")
+        ),
         columnDefs = list(
           list(width = "10px", targets = c(0:34)),
           list(className = 'dt-center', targets = c(1:34))
         ),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'font-size': '70%'});",
+          "$(this.api().table().header()).css({'font-size': '75%'});",
           "}")
       )
     ) %>%

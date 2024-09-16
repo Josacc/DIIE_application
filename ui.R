@@ -95,7 +95,7 @@ dashboardPage(
       tabItem(
         "CNGAE_analysis",
         navbarPage(
-          title       = "Evaluación y seguimiento",
+          title       = "Análisis y seguimiento",
           id          = "id_navbar_current_year",
           selected    = "Cargar archivo",
           collapsible = TRUE,
