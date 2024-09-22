@@ -1092,6 +1092,13 @@ function(input, output, session) {
         "Revisiones por OC",
         br(),
         br(),
+        h4(
+          p(strong("Tabulado de revisiones efectuadas por OC")),
+          style = "color: #3c8dbc; margin: 0rem; margin-top: -1rem; margin-bottom: 3rem;"
+        ),
+        p(strong("NA: "), "cuestionario no aplica"),
+        p(strong("NR: "), "cuestionario no revisado"),
+        br(),
         DTOutput("table_q_aclaracion_oc")
       )
     )
