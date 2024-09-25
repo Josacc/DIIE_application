@@ -32,7 +32,7 @@ db_q_aclaracion_oc <- function(database, delete_q) {
         scrollX    = 520,
         scrollY    = 505,
         language   = list(
-          url = '//cdn.datatables.net/plug-ins/2.1.6/i18n/es-MX.json',
+          url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json',
           paginate = list(previous = "", `next` = "")
         ),
         columnDefs = list(
