@@ -1042,15 +1042,15 @@ function(input, output, session) {
 # INTERNO --------------------------------------------------------------
 
   credentials <- loginServer(
-    id = "login",
-    data = DIIE_user_base,
+    id       = "login",
+    data     = DIIE_user_base,
     user_col = user,
-    pwd_col = password,
-    log_out = reactive(logout_init())
+    pwd_col  = password,
+    log_out  = reactive(logout_init())
   )
 
   logout_init <- logoutServer(
-    id = "logout",
+    id     = "logout",
     active = reactive(credentials()$user_auth)
   )
 

@@ -45,7 +45,7 @@ dashboardPage(
     titleWidth = 160,
     tags$li(
       class = "dropdown",
-      actionBttn("page_full", label = "", style ="minimal", icon = icon("maximize"))
+      actionBttn("page_full", label = "", style = "minimal", icon = icon("maximize"))
     ),
     dropdownMenu(
       type        = "messages",
