@@ -1083,8 +1083,7 @@ function(input, output, session) {
             br(),
             br(),
             plotlyOutput(
-              height = "500px",
-              "plot_obs_vs_census_2023",
+              "plot_obs_vs_census_2023"
             )
           )
         )
@@ -1100,7 +1099,33 @@ function(input, output, session) {
         p(strong("NA: "), "cuestionario no aplica"),
         p(strong("NR: "), "cuestionario no revisado"),
         br(),
-        DTOutput("table_q_aclaracion_oc")
+        DTOutput("table_q_aclaracion_oc"),
+        br(),
+        dropdownButton(
+          checkboxGroupInput(
+            "id_columns_data_q_aclaracion_oc",
+            "Columnas:",
+            choices  = c(
+              "Entidad", "Usuario",     "Perfil", "Registro",
+              "Estatus", "Observación", "Contador de días",
+              "Cantidad de obs", "Censo"
+            ),
+            selected = c(
+              "Registro", "Estatus", "Observación"
+            )
+          ),
+          circle  = TRUE,
+          status  = "primary",
+          icon    = icon("gear"),
+          width   = "300px",
+          tooltip = tooltipOptions(title = "Clic para seleccionar columnas")
+        ),
+        br(),
+        DTOutput("data_q_aclaracion_oc"),
+        br(),
+        br(),
+        br(),
+        br()
       )
     )
   })
@@ -1153,7 +1178,31 @@ function(input, output, session) {
   # Table questionnaires aclaracion oc
   output$table_q_aclaracion_oc <- renderDT({
     req(credentials()$user_auth)
-    db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))
+    db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$datatable
+  })
+
+  output$data_q_aclaracion_oc = renderDT({
+    req(credentials()$user_auth)
+
+    .data <- (db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data)[, c("Folio", input$id_columns_data_q_aclaracion_oc), drop = FALSE]
+    input_matrix <- input$table_q_aclaracion_oc_cells_selected
+
+    db_q_aclaracion_oc_filter(
+      .data,
+      db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$table,
+      input_matrix
+    ) %>%
+      datatable(
+        rownames = FALSE,
+        selection  = list(target = "cell"),
+        options  = list(
+          ordering   = F,
+          pageLength = 10,
+          language   = list(
+            url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+          )
+        )
+      )
   })
 
 }

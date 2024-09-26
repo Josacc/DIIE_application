@@ -25,11 +25,11 @@ Sys.setlocale(locale = "es_MX.utf8")
 source("data/application_user_base.R")
 
 set_labels(
-  language = "es",
+  language              = "es",
   "Please authenticate" = "",
-  "Username:" = "Usuario:",
-  "Password:" = "Contraseña:",
-  "Login" = "Ingresar"
+  "Username:"           = "Usuario:",
+  "Password:"           = "Contraseña:",
+  "Login"               = "Ingresar"
 )
 
 source("data/DIIE_user_base.R")
