@@ -38,38 +38,41 @@ db_q_aclaracion_oc <- function(database, delete_q) {
     select(-Estado, -Entidad, -Regional) %>%
     rename(Entidad = Abreviatura) %>%
     datatable(
-      extensions = "SearchBuilder",
       rownames   = FALSE,
       selection  = list(target = "cell"),
+      extensions = c("FixedColumns", "SearchBuilder", "Buttons", "FixedHeader"),
       options    = list(
-        ordering   = F,
-        pageLength = 16,
-        dom        = "Qlftip",
-        lengthMenu = list(c(8, 16, 32), c("8", "16", "32")),
-        search = list(regex = TRUE, search = "|"),
+        ordering      = F,
+        pageLength    = 8,
+        fixedHeader   = TRUE,
+        dom           = "QBlftip",
+        lengthMenu    = list(c(8, 16, 32), c("8", "16", "32")),
+        search        = list(regex = TRUE, search = "|"),
+        buttons       = list(list(extend = 'colvis', columns = 1:34)),
         searchbuilder = TRUE,
-        scrollX    = 520,
-        language   = list(
+        scrollX       = TRUE,
+        fixedColumns  = list(leftColumns = 1),
+        language      = list(
           url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
         ),
-        columnDefs = list(
+        columnDefs    = list(
           list(className = 'dt-center', targets = c(1:34))
         ),
-        initComplete = JS(
+        initComplete  = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'font-size': '75%'});",
+          "$(this.api().table().header()).css({'font-size': '90%'});",
           "}")
       )
     ) %>%
     formatStyle(
       columns         = c(1),
       color           = "navy",
-      fontSize        = '85%'
+      fontSize        = '90%'
     ) %>%
     formatStyle(
       columns         = c(2:38),
-      fontWeight      = "bold",
-      fontSize        = '70%'
+      fontWeight      = styleInterval(c(2), c("", "bold")),
+      fontSize        = '90%'
     ) %>%
     formatStyle(
       columns         = c(2:38),
