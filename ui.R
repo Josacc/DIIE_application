@@ -354,7 +354,8 @@ dashboardPage(
                         height = "400px"
                       )
                     )
-                  )
+                  ),
+                  br()
                 ),
                 tabPanel(
                   "Comparativo global 2023 vs 2024",
@@ -400,7 +401,8 @@ dashboardPage(
                         )
                       )
                     )
-                  )
+                  ),
+                  br()
                 ),
                 tabPanel(
                   "Cuestionarios enviados a revisión OC por entidad",
@@ -555,7 +557,8 @@ dashboardPage(
                         )
                       )
                     )
-                  )
+                  ),
+                  br(),
                 ),
                 tabPanel(
                   "Cuestionarios en proceso de firma y sello (1) por entidad",

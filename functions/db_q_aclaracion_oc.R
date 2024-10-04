@@ -44,7 +44,8 @@ db_q_aclaracion_oc <- function(database, delete_q) {
       options    = list(
         ordering   = F,
         pageLength = 16,
-        dom        = "Qftip",
+        dom        = "Qlftip",
+        lengthMenu = list(c(8, 16, 32), c("8", "16", "32")),
         search = list(regex = TRUE, search = "|"),
         searchbuilder = TRUE,
         scrollX    = 520,
@@ -52,7 +53,6 @@ db_q_aclaracion_oc <- function(database, delete_q) {
           url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
         ),
         columnDefs = list(
-          list(width = "10px", targets = c(1:34)),
           list(className = 'dt-center', targets = c(1:34))
         ),
         initComplete = JS(

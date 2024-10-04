@@ -1193,10 +1193,10 @@ function(input, output, session) {
       input_matrix
     ) %>%
       datatable(
-        rownames = FALSE,
+        rownames   = FALSE,
         selection  = list(target = "cell"),
-        options  = list(
-          ordering   = F,
+        options    = list(
+          ordering   = FALSE,
           pageLength = 10,
           language   = list(
             url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
