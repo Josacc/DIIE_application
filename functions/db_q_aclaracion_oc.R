@@ -40,7 +40,9 @@ db_q_aclaracion_oc <- function(database, delete_q) {
     datatable(
       rownames   = FALSE,
       selection  = list(target = "cell"),
-      extensions = c("FixedColumns", "SearchBuilder", "Buttons", "FixedHeader"),
+      extensions = c(
+        "FixedColumns", "SearchBuilder", "Buttons", "FixedHeader"
+      ),
       options    = list(
         ordering      = F,
         pageLength    = 8,
@@ -48,7 +50,15 @@ db_q_aclaracion_oc <- function(database, delete_q) {
         dom           = "QBlftip",
         lengthMenu    = list(c(8, 16, 32), c("8", "16", "32")),
         search        = list(regex = TRUE, search = "|"),
-        buttons       = list(list(extend = 'colvis', columns = 1:34)),
+        buttons       = list(
+          list(
+            extend           = "colvis",
+            text             = "Visibilidad de columnas",
+            columns          = 1:34,
+            collectionLayout = "fixed columns",
+            popoverTitle     = "Control de visibilidad de columnas"
+          )
+        ),
         searchbuilder = TRUE,
         scrollX       = TRUE,
         fixedColumns  = list(leftColumns = 1),

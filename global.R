@@ -13,9 +13,9 @@ library(DT)
 
 # Settings for shinyapss.io and Shiny Server
 options(
-  encoding = "UTF-8",
+  encoding               = "UTF-8",
   rsconnect.locale.cache = FALSE,
-  rsconnect.locale = "es_MX.utf8"
+  rsconnect.locale       = "es_MX.utf8"
 )
 Sys.setlocale(locale = "es_MX.utf8")
 

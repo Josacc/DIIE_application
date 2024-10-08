@@ -345,11 +345,13 @@ function(input, output, session) {
 
   output$database_original <- renderDataTable({
     datatable((data()[[1]])[, input$id_columns_data, drop = FALSE],
-              rownames = FALSE,
-              filter   = "top",
-              options  = list(
-                pageLength = 5,
-                language   = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+              rownames   = FALSE,
+              filter     = "top",
+              options    = list(
+                pageLength  = 5,
+                language    = list(
+                  url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+                )
               )
     )
   })
@@ -1059,6 +1061,28 @@ function(input, output, session) {
     tabsetPanel(
       type = "pills",
       tabPanel(
+        "Revisiones por OC",
+        br(),
+        br(),
+        h4(
+          p(strong("Tabulado de revisiones efectuadas por OC")),
+          style = "color: #3c8dbc; margin: 0rem; margin-top: -1rem; margin-bottom: 3rem;"
+        ),
+        p(strong("NA: "), "cuestionario no aplica"),
+        p(strong("NR: "), "cuestionario no revisado"),
+        br(),
+        DTOutput("table_q_aclaracion_oc"),
+        br(),
+        br(),
+        br(),
+        br(),
+        DTOutput("data_q_aclaracion_oc"),
+        br(),
+        br(),
+        br(),
+        br()
+      ),
+      tabPanel(
         "Ranking de entidades por preguntas observadas",
         br(),
         br(),
@@ -1087,45 +1111,6 @@ function(input, output, session) {
             )
           )
         )
-      ),
-      tabPanel(
-        "Revisiones por OC",
-        br(),
-        br(),
-        h4(
-          p(strong("Tabulado de revisiones efectuadas por OC")),
-          style = "color: #3c8dbc; margin: 0rem; margin-top: -1rem; margin-bottom: 3rem;"
-        ),
-        p(strong("NA: "), "cuestionario no aplica"),
-        p(strong("NR: "), "cuestionario no revisado"),
-        br(),
-        DTOutput("table_q_aclaracion_oc"),
-        br(),
-        dropdownButton(
-          checkboxGroupInput(
-            "id_columns_data_q_aclaracion_oc",
-            "Columnas:",
-            choices  = c(
-              "Entidad", "Usuario",     "Perfil", "Registro",
-              "Estatus", "Observación", "Contador de días",
-              "Cantidad de obs", "Censo"
-            ),
-            selected = c(
-              "Registro", "Estatus", "Observación"
-            )
-          ),
-          circle  = TRUE,
-          status  = "primary",
-          icon    = icon("gear"),
-          width   = "300px",
-          tooltip = tooltipOptions(title = "Clic para seleccionar columnas")
-        ),
-        br(),
-        DTOutput("data_q_aclaracion_oc"),
-        br(),
-        br(),
-        br(),
-        br()
       )
     )
   })
@@ -1184,22 +1169,37 @@ function(input, output, session) {
   output$data_q_aclaracion_oc = renderDT({
     req(credentials()$user_auth)
 
-    .data <- (db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data)[, c("Folio", input$id_columns_data_q_aclaracion_oc), drop = FALSE]
-    input_matrix <- input$table_q_aclaracion_oc_cells_selected
+    # .data <- (db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data)[, c("Folio", input$id_columns_data_q_aclaracion_oc), drop = FALSE]
+    # input_matrix <- input$table_q_aclaracion_oc_cells_selected
 
     db_q_aclaracion_oc_filter(
-      .data,
+      db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data,
       db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$table,
-      input_matrix
+      input$table_q_aclaracion_oc_cells_selected
     ) %>%
       datatable(
         rownames   = FALSE,
         selection  = list(target = "cell"),
+        extensions = c("Buttons", "FixedHeader"),
         options    = list(
-          ordering   = FALSE,
-          pageLength = 10,
-          language   = list(
+          ordering    = FALSE,
+          pageLength  = 10,
+          fixedHeader = TRUE,
+          dom         = "Blftip",
+          buttons     = list(
+            list(
+              extend           = "colvis",
+              text             = "Visibilidad de columnas",
+              columns          = c(1:5, 7:9),
+              collectionLayout = "fixed columns",
+              popoverTitle     = "Control de visibilidad de columnas"
+            )
+          ),
+          language    = list(
             url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+          ),
+          columnDefs  = list(
+            list(visible = FALSE, targets = c(1:3, 7:9))
           )
         )
       )
