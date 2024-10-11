@@ -215,7 +215,7 @@ function(input, output, session) {
       filter   = list(position = "top"),#"top",
       options = list(
         dom = "ltipr",
-        language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+        language = list(url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json")
       )
     )
   })
@@ -350,7 +350,7 @@ function(input, output, session) {
               options    = list(
                 pageLength  = 5,
                 language    = list(
-                  url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+                  url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
                 )
               )
     )
@@ -430,7 +430,9 @@ function(input, output, session) {
       rownames = FALSE,
       options  = list(
         pageLength = 5,
-        language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+        language   = list(
+          url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+        )
       )
     )
   })
@@ -496,7 +498,7 @@ function(input, output, session) {
       filter   = "top",
       options = list(
         pageLength = 5,
-        language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+        language = list(url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json")
       ),
       escape = FALSE
     )
@@ -609,7 +611,9 @@ function(input, output, session) {
               datatable(
                 options = list(
                   dom = 't',
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 ),
                 rownames = FALSE
               ),
@@ -622,7 +626,9 @@ function(input, output, session) {
               datatable(
                 options = list(
                   dom = 't',
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 ),
                 rownames = FALSE
               ),
@@ -634,8 +640,10 @@ function(input, output, session) {
             )[["dframe"]] %>%
               datatable(
                 options = list(
-                  dom = 't',
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  dom      = 't',
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 ),
                 rownames = FALSE
               )
@@ -707,7 +715,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               ),
 
@@ -720,7 +730,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               ),
 
@@ -733,7 +745,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               )
     )
@@ -782,7 +796,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               ),
 
@@ -795,7 +811,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               ),
 
@@ -808,7 +826,9 @@ function(input, output, session) {
                 rownames = FALSE,
                 filter   = "top",
                 options  = list(
-                  language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+                  language = list(
+                    url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+                  )
                 )
               )
     )
@@ -1196,7 +1216,7 @@ function(input, output, session) {
             )
           ),
           language    = list(
-            url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+            url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
           ),
           columnDefs  = list(
             list(visible = FALSE, targets = c(1:3, 7:9))
