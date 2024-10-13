@@ -12,7 +12,8 @@ library(shinymanager)
 function(input, output, session) {
 
   res_auth <- secure_server(
-    check_credentials = check_credentials(application_user_base)
+    check_credentials = check_credentials(application_user_base),
+    timeout           = 20
   )
 
   auth <- callModule(
@@ -213,9 +214,11 @@ function(input, output, session) {
       reactive_top_ten_questions_2023()[[2]],
       rownames = FALSE,
       filter   = list(position = "top"),#"top",
-      options = list(
-        dom = "ltipr",
-        language = list(url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json")
+      options  = list(
+        dom      = "ltipr",
+        language = list(
+          url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+        )
       )
     )
   })
@@ -496,9 +499,11 @@ function(input, output, session) {
       DT_questionnaires_firma_sello_registro(database_firma_sello()),
       rownames = FALSE,
       filter   = "top",
-      options = list(
+      options  = list(
         pageLength = 5,
-        language = list(url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json")
+        language   = list(
+          url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
+        )
       ),
       escape = FALSE
     )
@@ -610,7 +615,7 @@ function(input, output, session) {
             )[["dframe"]] %>%
               datatable(
                 options = list(
-                  dom = 't',
+                  dom      = 't',
                   language = list(
                     url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
                   )
@@ -625,7 +630,7 @@ function(input, output, session) {
             )[["dframe"]] %>%
               datatable(
                 options = list(
-                  dom = 't',
+                  dom      = 't',
                   language = list(
                     url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json"
                   )
@@ -1184,13 +1189,10 @@ function(input, output, session) {
   output$table_q_aclaracion_oc <- renderDT({
     req(credentials()$user_auth)
     db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$datatable
-  })
+  }, server = FALSE)
 
   output$data_q_aclaracion_oc = renderDT({
     req(credentials()$user_auth)
-
-    # .data <- (db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data)[, c("Folio", input$id_columns_data_q_aclaracion_oc), drop = FALSE]
-    # input_matrix <- input$table_q_aclaracion_oc_cells_selected
 
     db_q_aclaracion_oc_filter(
       db_q_aclaracion_oc(data()[[1]], c("8101", "8201", "8301"))$data,
