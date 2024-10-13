@@ -42,7 +42,7 @@ dashboardPage(
 
   dashboardHeader(
     title="DIIE app",
-    titleWidth = 120,
+    titleWidth = 130,
     tags$li(
       class = "dropdown",
       actionBttn("page_full", label = "", style = "minimal", icon = icon("maximize"))
@@ -64,7 +64,7 @@ dashboardPage(
 # dashboard Sidebar -------------------------------------------------------
 
   dashboardSidebar(
-    width = 120,
+    width = 0,
     HTML(str_c("<br><br><br><br><br><br><br>")),
     sidebarMenu(
       menuItem(
