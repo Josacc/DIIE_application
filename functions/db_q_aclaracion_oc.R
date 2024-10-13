@@ -63,7 +63,10 @@ db_q_aclaracion_oc <- function(database, delete_q) {
         scrollX       = TRUE,
         fixedColumns  = list(leftColumns = 1),
         language      = list(
-          url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json'
+          url = "https://cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json",
+          searchBuilder =list(
+            add =  "Agregar condición"
+          )
         ),
         columnDefs    = list(
           list(className = 'dt-center', targets = c(1:34))
