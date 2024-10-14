@@ -18,7 +18,7 @@ function(input, output, session) {
 
   auth <- callModule(
     module = auth_server,
-    id = "auth",
+    id     = "auth",
     check_credentials = check_credentials(application_user_base)
   )
 

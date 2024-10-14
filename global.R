@@ -1,5 +1,5 @@
 # DIIE app
-# by Antonio Chávez
+# by Josacc
 
 library(patchwork)
 library(scales)

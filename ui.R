@@ -13,6 +13,8 @@ library(shinymanager)
 library(shinythemes)
 
 
+source("contact/contact.R")
+
 secure_app(
   theme    = shinytheme("flatly"),
   language = "es",
@@ -30,7 +32,9 @@ secure_app(
     tags$p(
       "Cualquier pregunta, por favor contacte al ",
       tags$a(
-        href = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app%20autenticación",
+        href = str_c(
+          "mailto:", contact_email, "?Subject=DIIE%20app%20autenticación"
+        ),
         target ="_top", "administrator"
       )
     )
@@ -52,10 +56,10 @@ dashboardPage(
       badgeStatus = NULL,
       headerText  = "Dudas o sugerencias",
       messageItem(
-        from    = "José Antonio Chávez Castillo",
-        message = "jose.chavezca@inegi.org.mx",
+        from    = contact_name,
+        message = contact_email,
         icon    = icon("user-gear"),
-        href    = "mailto:jose.chavezca@inegi.org.mx?Subject=DIIE%20app"
+        href    = str_c("mailto:", contact_email, "?Subject=DIIE%20app")
       )
     )
   ),
